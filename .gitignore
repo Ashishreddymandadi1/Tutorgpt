@@ -1,0 +1,50 @@
+# Node
+node_modules/
+dist/
+build/
+.vite/
+
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Env / secrets
+.env
+*.env.local
+*.env.*.local
+
+# ChromaDB data
+ai-service/chroma_data/
+
+# Uploaded files
+ai-service/uploads/
+backend/uploads/
+
+# Logs
+*.log
+logs/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
