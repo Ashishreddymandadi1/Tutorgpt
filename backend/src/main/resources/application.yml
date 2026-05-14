@@ -26,10 +26,18 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
   autoconfigure:
     exclude:
       - org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration
       - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+
+upload:
+  dir: ./uploads
 
 management:
   endpoints:

@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routers import ingest
 
-app = FastAPI(title="TutorGPT AI Service", version="0.1.0")
+app = FastAPI(title="TutorGPT AI Service", version="0.2.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -10,11 +11,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(ingest.router)
+
 
 @app.get("/health")
 async def health():
     return {
         "status": "ok",
         "service": "ai-service",
-        "version": "0.1.0",
+        "version": "0.2.0",
     }

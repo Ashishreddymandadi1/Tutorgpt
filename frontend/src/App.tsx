@@ -4,6 +4,8 @@ import axios from 'axios'
 import LoginPage from '@/pages/LoginPage'
 import SignupPage from '@/pages/SignupPage'
 import DashboardPage from '@/pages/DashboardPage'
+import CoursesPage from '@/pages/CoursesPage'
+import CoursePage from '@/pages/CoursePage'
 import PrivateRoute from '@/components/PrivateRoute'
 import { useAuthStore } from '@/store/authStore'
 
@@ -104,11 +106,15 @@ export default function App() {
       <Route path="/signup" element={<SignupPage />} />
       <Route
         path="/dashboard"
-        element={
-          <PrivateRoute>
-            <DashboardPage />
-          </PrivateRoute>
-        }
+        element={<PrivateRoute><DashboardPage /></PrivateRoute>}
+      />
+      <Route
+        path="/courses"
+        element={<PrivateRoute><CoursesPage /></PrivateRoute>}
+      />
+      <Route
+        path="/courses/:id"
+        element={<PrivateRoute><CoursePage /></PrivateRoute>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

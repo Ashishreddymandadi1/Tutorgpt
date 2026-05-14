@@ -43,7 +43,8 @@ export default function DashboardPage() {
             icon={<BookOpen className="h-6 w-6 text-indigo-600" />}
             title="My Courses"
             description="Upload materials and start a course"
-            badge="Phase 3"
+            onClick={() => navigate('/courses')}
+            active
           />
           <FeatureCard
             icon={<Brain className="h-6 w-6 text-purple-600" />}
@@ -95,20 +96,34 @@ function FeatureCard({
   title,
   description,
   badge,
+  onClick,
+  active,
 }: {
   icon: React.ReactNode
   title: string
   description: string
-  badge: string
+  badge?: string
+  onClick?: () => void
+  active?: boolean
 }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-md transition-shadow">
+    <div
+      className={`bg-white rounded-2xl border p-6 transition-shadow ${active ? 'border-indigo-200 hover:shadow-md cursor-pointer' : 'border-gray-100'}`}
+      onClick={onClick}
+    >
       <div className="mb-4">{icon}</div>
       <h3 className="font-semibold text-gray-900 mb-1">{title}</h3>
       <p className="text-sm text-gray-500 mb-3">{description}</p>
-      <span className="inline-block text-xs bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
-        Coming in {badge}
-      </span>
+      {badge && (
+        <span className="inline-block text-xs bg-gray-100 text-gray-500 rounded-full px-2 py-0.5">
+          Coming in {badge}
+        </span>
+      )}
+      {active && (
+        <span className="inline-block text-xs bg-indigo-50 text-indigo-600 rounded-full px-2 py-0.5 font-medium">
+          Open →
+        </span>
+      )}
     </div>
   )
 }

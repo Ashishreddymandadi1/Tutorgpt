@@ -11,6 +11,9 @@ target/
 *.war
 .mvn/wrapper/maven-wrapper.jar
 
+# H2 database files
+backend/data/
+
 # Python
 __pycache__/
 *.py[cod]
