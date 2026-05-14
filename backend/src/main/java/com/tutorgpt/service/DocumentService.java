@@ -56,12 +56,15 @@ public class DocumentService {
         validateFile(file);
         Course course = courseService.getCourseEntity(courseId, userDetails);
 
-        // Save file to disk
-        Path courseDir = Paths.get(uploadDir, String.valueOf(courseId));
+        // Save file to disk (Files.copy works reliably across Windows drives)
+        Path courseDir = Paths.get(uploadDir, String.valueOf(courseId)).toAbsolutePath();
         Files.createDirectories(courseDir);
         String filename = sanitizeFilename(file.getOriginalFilename());
         Path filePath = courseDir.resolve(filename);
-        file.transferTo(filePath.toFile());
+        try (var inputStream = file.getInputStream()) {
+            Files.copy(inputStream, filePath, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+        }
+        log.info("Saved file to {}", filePath);
 
         // Create DB record
         Document document = Document.builder()

@@ -41,7 +41,7 @@ public class DocumentController {
                     .body(ErrorResponse.of("INVALID_FILE", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ErrorResponse.of("UPLOAD_FAILED", "File upload failed"));
+                    .body(ErrorResponse.of("UPLOAD_FAILED", "File upload failed. Please try again."));
         }
     }
 

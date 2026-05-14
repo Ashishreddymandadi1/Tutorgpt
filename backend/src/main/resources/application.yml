@@ -37,7 +37,7 @@ spring:
       - org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
 
 upload:
-  dir: ./uploads
+  dir: A:/Tutorgpt/backend/uploads
 
 management:
   endpoints:
