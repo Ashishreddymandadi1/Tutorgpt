@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowLeft, FileText, Trash2, CheckCircle, XCircle, Loader2,
-  Send, BookOpen,
+  Send, BookOpen, Brain,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import UploadZone from '@/components/UploadZone'
@@ -50,6 +50,18 @@ export default function CoursePage() {
   })
 
   const hasReadyDocs = documents.some((d) => d.status === 'READY')
+
+  const quizMutation = useMutation({
+    mutationFn: async () => {
+      const res = await api.post(
+        `/courses/${courseId}/quizzes/generate?numQuestions=5&difficulty=medium`
+      )
+      return res.data as { id: number }
+    },
+    onSuccess: (data) => {
+      navigate(`/courses/${courseId}/quiz/${data.id}`)
+    },
+  })
 
   const uploadMutation = useMutation({
     mutationFn: async (files: File[]) => {
@@ -168,6 +180,24 @@ export default function CoursePage() {
             <p className="text-center text-gray-400 text-xs py-4">
               No documents yet. Upload a PDF, PPTX, or DOCX to get started.
             </p>
+          )}
+
+          {hasReadyDocs && (
+            <Button
+              onClick={() => quizMutation.mutate()}
+              disabled={quizMutation.isPending}
+              className="w-full rounded-xl bg-violet-600 hover:bg-violet-700 h-10 text-sm font-medium"
+            >
+              {quizMutation.isPending ? (
+                <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Generating…</>
+              ) : (
+                <><Brain className="h-4 w-4 mr-2" /> Generate Quiz</>
+              )}
+            </Button>
+          )}
+
+          {quizMutation.isError && (
+            <p className="text-xs text-red-600 text-center">Quiz generation failed. Please try again.</p>
           )}
         </aside>
 

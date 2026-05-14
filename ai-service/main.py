@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import ingest, query
+from routers import ingest, query, quiz
 
 app = FastAPI(title="TutorGPT AI Service", version="0.3.0")
 
@@ -13,6 +13,7 @@ app.add_middleware(
 
 app.include_router(ingest.router)
 app.include_router(query.router)
+app.include_router(quiz.router)
 
 
 @app.get("/health")
