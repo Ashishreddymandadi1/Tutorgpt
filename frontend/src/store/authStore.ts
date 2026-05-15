@@ -13,6 +13,7 @@ interface AuthState {
   isAuthenticated: boolean
   login: (token: string, user: User) => void
   logout: () => void
+  updateUser: (user: User) => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -37,5 +38,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.removeItem('tutorgpt_token')
     localStorage.removeItem('tutorgpt_user')
     set({ token: null, user: null, isAuthenticated: false })
+  },
+
+  updateUser: (user) => {
+    localStorage.setItem('tutorgpt_user', JSON.stringify(user))
+    set({ user })
   },
 }))

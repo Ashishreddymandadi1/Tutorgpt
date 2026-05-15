@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Plus, BookOpen, Trash2, ArrowLeft } from 'lucide-react'
+import { Plus, BookOpen, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
+import Navbar from '@/components/Navbar'
 import api from '@/services/api'
 
 interface Course {
@@ -45,19 +46,15 @@ export default function CoursesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-4">
-        <button onClick={() => navigate('/dashboard')} className="text-gray-400 hover:text-gray-600">
-          <ArrowLeft className="h-5 w-5" />
-        </button>
-        <span className="text-xl font-bold text-gray-900">My Courses</span>
-        <div className="ml-auto">
-          <Button onClick={() => setShowCreate(true)}>
-            <Plus className="h-4 w-4 mr-1.5" /> New Course
-          </Button>
-        </div>
-      </header>
+      <Navbar />
+      <div className="max-w-3xl mx-auto px-6 pt-6 pb-2 flex items-center justify-between">
+        <h1 className="text-xl font-bold text-gray-900">My Courses</h1>
+        <Button onClick={() => setShowCreate(true)}>
+          <Plus className="h-4 w-4 mr-1.5" /> New Course
+        </Button>
+      </div>
 
-      <main className="max-w-3xl mx-auto px-6 py-10">
+      <main className="max-w-3xl mx-auto px-6 py-4">
         {/* Create modal */}
         {showCreate && (
           <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">

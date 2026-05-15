@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowLeft, CheckCircle, XCircle, RotateCcw, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Navbar from '@/components/Navbar'
 import api from '@/services/api'
 
 interface QuizQuestion {
@@ -90,7 +91,8 @@ export default function QuizPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-4">
+      <Navbar />
+      <div className="bg-white border-b border-gray-100 px-6 py-3 flex items-center gap-4">
         <button
           onClick={() => navigate(`/courses/${courseId}`)}
           className="text-gray-400 hover:text-gray-600"
@@ -109,7 +111,7 @@ export default function QuizPage() {
             <RotateCcw className="h-4 w-4" /> Retry
           </button>
         )}
-      </header>
+      </div>
 
       <main className="max-w-2xl mx-auto px-4 py-8 space-y-6">
         {/* Score banner */}

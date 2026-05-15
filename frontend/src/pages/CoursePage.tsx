@@ -7,6 +7,7 @@ import {
   Sparkles, ChevronDown, ChevronUp,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Navbar from '@/components/Navbar'
 import UploadZone from '@/components/UploadZone'
 import api from '@/services/api'
 
@@ -147,17 +148,18 @@ export default function CoursePage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-4 flex-shrink-0">
+      <Navbar />
+      <div className="bg-white border-b border-gray-100 px-6 py-3 flex items-center gap-3">
         <button onClick={() => navigate('/courses')} className="text-gray-400 hover:text-gray-600">
-          <ArrowLeft className="h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
         </button>
         <div>
-          <span className="text-xl font-bold text-gray-900">{course?.name ?? '…'}</span>
+          <span className="font-bold text-gray-900">{course?.name ?? '…'}</span>
           {course?.description && (
-            <p className="text-sm text-gray-500">{course.description}</p>
+            <p className="text-xs text-gray-500">{course.description}</p>
           )}
         </div>
-      </header>
+      </div>
 
       <div className="flex flex-1 overflow-hidden max-w-6xl mx-auto w-full px-4 py-6 gap-6">
         {/* Left column: documents */}

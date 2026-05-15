@@ -8,6 +8,7 @@ import CoursesPage from '@/pages/CoursesPage'
 import CoursePage from '@/pages/CoursePage'
 import QuizPage from '@/pages/QuizPage'
 import FlashcardsPage from '@/pages/FlashcardsPage'
+import SettingsPage from '@/pages/SettingsPage'
 import PrivateRoute from '@/components/PrivateRoute'
 import { useAuthStore } from '@/store/authStore'
 
@@ -125,6 +126,10 @@ export default function App() {
       <Route
         path="/courses/:id/deck/:deckId"
         element={<PrivateRoute><FlashcardsPage /></PrivateRoute>}
+      />
+      <Route
+        path="/settings"
+        element={<PrivateRoute><SettingsPage /></PrivateRoute>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
