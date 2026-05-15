@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { BookOpen, Settings, LogOut, ChevronDown, GraduationCap } from 'lucide-react'
+import { Settings, LogOut, ChevronDown } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
+import TutorGPTLogo from '@/components/TutorGPTLogo'
 
 export default function Navbar() {
   const { user, logout } = useAuthStore()
@@ -35,10 +36,9 @@ export default function Navbar() {
       {/* Logo */}
       <button
         onClick={() => navigate('/dashboard')}
-        className="flex items-center gap-2 text-indigo-600 font-bold text-lg flex-shrink-0"
+        className="flex-shrink-0 hover:opacity-80 transition-opacity"
       >
-        <GraduationCap className="h-6 w-6" />
-        TutorGPT
+        <TutorGPTLogo size={32} textSize="sm" />
       </button>
 
       {/* Nav links */}

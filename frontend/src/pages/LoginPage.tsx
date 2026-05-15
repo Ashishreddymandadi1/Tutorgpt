@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuthStore } from '@/store/authStore'
+import TutorGPTLogo from '@/components/TutorGPTLogo'
 import api from '@/services/api'
 
 interface AuthResponse {
@@ -45,9 +46,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-sm">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">TutorGPT</h1>
-          <p className="text-gray-500 text-sm mt-1">Your AI-powered tutor</p>
+        <div className="flex flex-col items-center mb-8">
+          <TutorGPTLogo size={64} textSize="xl" />
+          <p className="text-gray-600 text-sm mt-2">Your AI-powered tutor</p>
         </div>
 
         <Card>
