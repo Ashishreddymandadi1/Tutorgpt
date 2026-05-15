@@ -1,55 +1,105 @@
 @import "tailwindcss";
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* ── Dark "Cappen-inspired" palette ─────────────────────────────────────────
+   Remap Tailwind's semantic color tokens so every existing utility class
+   automatically renders in the new palette — no component changes needed.
+   ──────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Grays → near-black surfaces */
+  --color-gray-50:  #0a0a0a;
+  --color-gray-100: #111111;
+  --color-gray-200: #1a1a1a;
+  --color-gray-300: #242424;
+  --color-gray-400: #555555;
+  --color-gray-500: #777777;
+  --color-gray-600: #999999;
+  --color-gray-700: #bbbbbb;
+  --color-gray-800: #d5d5d5;
+  --color-gray-900: #f0f0f0;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* White → dark card surface */
+  --color-white: #141414;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Indigo → warm gold (primary accent) */
+  --color-indigo-50:  #1c1810;
+  --color-indigo-100: #241e0e;
+  --color-indigo-200: #3a3018;
+  --color-indigo-300: #5a4a24;
+  --color-indigo-400: #8a7030;
+  --color-indigo-500: #b8972e;
+  --color-indigo-600: #c9a84c;
+  --color-indigo-700: #d4b86a;
+  --color-indigo-800: #e0cc96;
+  --color-indigo-900: #f0e4c0;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Violet → slightly deeper gold (quiz) */
+  --color-violet-50:  #1a1710;
+  --color-violet-100: #221e0e;
+  --color-violet-200: #342c14;
+  --color-violet-300: #504220;
+  --color-violet-400: #7a6428;
+  --color-violet-500: #a88630;
+  --color-violet-600: #b8972e;
+  --color-violet-700: #c9a84c;
+  --color-violet-800: #d9be7a;
+  --color-violet-900: #edd8a8;
+
+  /* Purple → gold tint */
+  --color-purple-50:  #1c1810;
+  --color-purple-100: #241e0e;
+  --color-purple-200: #3a3018;
+  --color-purple-600: #c9a84c;
+  --color-purple-700: #d4b86a;
+
+  /* Teal → keep as copper-teal contrast accent (flashcards) */
+  --color-teal-50:  #0a1614;
+  --color-teal-100: #0f1e1b;
+  --color-teal-200: #163028;
+  --color-teal-300: #1e4238;
+  --color-teal-400: #2a6050;
+  --color-teal-500: #368068;
+  --color-teal-600: #3d9e82;
+  --color-teal-700: #52b898;
+  --color-teal-800: #80ccb8;
+  --color-teal-900: #b0e0d4;
+
+  /* Green → neon-ish bright green on dark */
+  --color-green-50:  #0a160e;
+  --color-green-100: #0f1e14;
+  --color-green-200: #163020;
+  --color-green-600: #34d399;
+  --color-green-700: #6ee7b7;
+  --color-green-800: #a7f3d0;
+
+  /* Red → softer red on dark */
+  --color-red-50:  #1a0a0a;
+  --color-red-100: #220e0e;
+  --color-red-200: #341414;
+  --color-red-300: #5a2020;
+  --color-red-400: #cc4444;
+  --color-red-500: #e05555;
+  --color-red-600: #f07070;
+  --color-red-700: #f8a0a0;
+
+  /* Amber → gold */
+  --color-amber-50:  #1c1810;
+  --color-amber-700: #c9a84c;
+  --color-amber-800: #d4b86a;
+
+  /* Blue */
+  --color-blue-50:  #0a1020;
+  --color-blue-500: #60a5fa;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font: 16px/150% var(--sans);
+  color-scheme: dark;
+  color: #c0c0c0;
+  background: #0a0a0a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 #root {
@@ -59,48 +109,27 @@
 
 body {
   margin: 0;
+  background: #0a0a0a;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #555; }
+
+/* Input / textarea autofill fix on dark */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset;
+  -webkit-text-fill-color: #f0f0f0;
+  caret-color: #f0f0f0;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Gold focus rings */
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+  outline: 2px solid #c9a84c;
+  outline-offset: 2px;
 }

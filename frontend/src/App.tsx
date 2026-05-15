@@ -65,7 +65,7 @@ function HealthPage() {
               <ServiceRow name="Backend" description={`Spring Boot · v${data.version}`} status={data.status} />
               <ServiceRow name="AI Service" description="FastAPI · Python" status={data.ai_service?.status ?? 'unreachable'} />
             </div>
-            <div className={`rounded-xl p-4 text-center font-semibold text-lg ${allHealthy ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-yellow-50 text-yellow-700 border border-yellow-200'}`}>
+            <div className={`rounded-xl p-4 text-center font-semibold text-lg ${allHealthy ? 'bg-green-50 text-green-600 border border-green-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}`}>
               {allHealthy ? '✓ All systems healthy' : '⚠ Some services are down'}
             </div>
           </>
