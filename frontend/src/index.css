@@ -51,17 +51,17 @@
   --color-purple-600: #c0c0c0;
   --color-purple-700: #d0d0d0;
 
-  /* Teal → keep as subtle cyan accent (flashcards) */
-  --color-teal-50:  #001414;
-  --color-teal-100: #001e1e;
-  --color-teal-200: #003030;
-  --color-teal-300: #004848;
-  --color-teal-400: #006868;
-  --color-teal-500: #009494;
-  --color-teal-600: #00c8c8;
-  --color-teal-700: #40dede;
-  --color-teal-800: #80eeee;
-  --color-teal-900: #c0fafa;
+  /* Teal → white/silver (flashcards) */
+  --color-teal-50:  #080808;
+  --color-teal-100: #101010;
+  --color-teal-200: #1c1c1c;
+  --color-teal-300: #2c2c2c;
+  --color-teal-400: #484848;
+  --color-teal-500: #707070;
+  --color-teal-600: #d0d0d0;
+  --color-teal-700: #e0e0e0;
+  --color-teal-800: #ececec;
+  --color-teal-900: #f8f8f8;
 
   /* Green → neon green on dark */
   --color-green-50:  #001408;
@@ -86,9 +86,9 @@
   --color-amber-700: #e0e0e0;
   --color-amber-800: #ececec;
 
-  /* Blue */
+  /* Blue → silver */
   --color-blue-50:  #080808;
-  --color-blue-500: #c0c0c0;
+  --color-blue-500: #d0d0d0;
 }
 
 :root {
