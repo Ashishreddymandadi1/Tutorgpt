@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuthStore } from '@/store/authStore'
 import TutorGPTLogo from '@/components/TutorGPTLogo'
+import NeuralBackground from '@/components/NeuralBackground'
 import api from '@/services/api'
 
 interface AuthResponse {
@@ -49,8 +50,9 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center p-4">
+      <NeuralBackground />
+      <div className="relative z-10 w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
           <TutorGPTLogo size={64} textSize="xl" />
           <p className="text-gray-600 text-sm mt-2">Your AI-powered tutor</p>
