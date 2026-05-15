@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ArrowLeft, CheckCircle, XCircle, RotateCcw, Trophy } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Navbar from '@/components/Navbar'
+import NeuralBackground from '@/components/NeuralBackground'
 import api from '@/services/api'
 
 interface QuizQuestion {
@@ -69,16 +70,18 @@ export default function QuizPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
+      <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
+        <NeuralBackground />
+        <div className="relative z-10 h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
       </div>
     )
   }
 
   if (isError || !quiz) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-red-600">Failed to load quiz.</p>
+      <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
+        <NeuralBackground />
+        <p className="relative z-10 text-red-600">Failed to load quiz.</p>
       </div>
     )
   }
@@ -90,7 +93,9 @@ export default function QuizPage() {
   const pct = total > 0 ? Math.round((score / total) * 100) : 0
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <NeuralBackground />
+      <div className="relative z-10">
       <Navbar />
       <div className="bg-white border-b border-gray-100 px-6 py-3 flex items-center gap-4">
         <button
@@ -238,6 +243,7 @@ export default function QuizPage() {
           </div>
         )}
       </main>
+      </div>
     </div>
   )
 }

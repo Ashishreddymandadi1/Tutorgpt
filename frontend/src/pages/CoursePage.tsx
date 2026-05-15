@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Navbar from '@/components/Navbar'
+import NeuralBackground from '@/components/NeuralBackground'
 import UploadZone from '@/components/UploadZone'
 import api from '@/services/api'
 
@@ -147,7 +148,9 @@ export default function CoursePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden flex flex-col">
+      <NeuralBackground />
+      <div className="relative z-10 flex flex-col flex-1">
       <Navbar />
       <div className="bg-white border-b border-gray-100 px-6 py-3 flex items-center gap-3">
         <button onClick={() => navigate('/courses')} className="text-gray-400 hover:text-gray-600">
@@ -374,6 +377,7 @@ export default function CoursePage() {
             </Button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   )

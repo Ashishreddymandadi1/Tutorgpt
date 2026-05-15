@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent } from '@/components/ui/card'
 import Navbar from '@/components/Navbar'
+import NeuralBackground from '@/components/NeuralBackground'
 import api from '@/services/api'
 
 interface Course {
@@ -45,7 +46,9 @@ export default function CoursesPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <NeuralBackground />
+      <div className="relative z-10">
       <Navbar />
       <div className="max-w-3xl mx-auto px-6 pt-6 pb-2 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-900">My Courses</h1>
@@ -147,6 +150,7 @@ export default function CoursesPage() {
           ))}
         </div>
       </main>
+      </div>
     </div>
   )
 }

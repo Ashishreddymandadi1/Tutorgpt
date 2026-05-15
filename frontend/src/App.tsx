@@ -10,6 +10,7 @@ import QuizPage from '@/pages/QuizPage'
 import FlashcardsPage from '@/pages/FlashcardsPage'
 import SettingsPage from '@/pages/SettingsPage'
 import PrivateRoute from '@/components/PrivateRoute'
+import NeuralBackground from '@/components/NeuralBackground'
 import { useAuthStore } from '@/store/authStore'
 
 interface HealthResponse {
@@ -38,8 +39,9 @@ function HealthPage() {
   const allHealthy = data?.status === 'ok' && data?.ai_service?.status === 'ok'
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center p-6">
+      <NeuralBackground />
+      <div className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-1">TutorGPT</h1>
           <p className="text-gray-500 text-sm">System Health</p>

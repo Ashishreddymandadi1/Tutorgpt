@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { ArrowLeft, ChevronLeft, ChevronRight, RotateCcw, Layers } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Navbar from '@/components/Navbar'
+import NeuralBackground from '@/components/NeuralBackground'
 import api from '@/services/api'
 
 interface Flashcard {
@@ -36,16 +37,18 @@ export default function FlashcardsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-teal-500 border-t-transparent" />
+      <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
+        <NeuralBackground />
+        <div className="relative z-10 h-8 w-8 animate-spin rounded-full border-4 border-teal-500 border-t-transparent" />
       </div>
     )
   }
 
   if (isError || !deck) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-red-600">Failed to load flashcards.</p>
+      <div className="min-h-screen bg-gray-50 relative overflow-hidden flex items-center justify-center">
+        <NeuralBackground />
+        <p className="relative z-10 text-red-600">Failed to load flashcards.</p>
       </div>
     )
   }
@@ -77,7 +80,9 @@ export default function FlashcardsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden flex flex-col">
+      <NeuralBackground />
+      <div className="relative z-10 flex flex-col flex-1">
       <Navbar />
       <div className="bg-white border-b border-gray-100 px-6 py-3 flex items-center gap-4 flex-shrink-0">
         <button onClick={() => navigate(`/courses/${courseId}`)} className="text-gray-400 hover:text-gray-600">
@@ -220,6 +225,7 @@ export default function FlashcardsPage() {
           </div>
         )}
       </main>
+      </div>
     </div>
   )
 }

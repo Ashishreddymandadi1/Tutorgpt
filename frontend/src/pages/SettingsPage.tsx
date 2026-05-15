@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { CheckCircle } from 'lucide-react'
 import Navbar from '@/components/Navbar'
+import NeuralBackground from '@/components/NeuralBackground'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -52,7 +53,9 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <NeuralBackground />
+      <div className="relative z-10">
       <Navbar />
       <main className="max-w-xl mx-auto px-6 py-10 space-y-6">
         <div>
@@ -165,6 +168,7 @@ export default function SettingsPage() {
           </div>
         </section>
       </main>
+      </div>
     </div>
   )
 }
