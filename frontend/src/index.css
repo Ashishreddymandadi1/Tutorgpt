@@ -1,102 +1,102 @@
 @import "tailwindcss";
 
-/* ── Dark "Cappen-inspired" palette ─────────────────────────────────────────
-   Remap Tailwind's semantic color tokens so every existing utility class
-   automatically renders in the new palette — no component changes needed.
+/* ── Space-theme palette ─────────────────────────────────────────────────────
+   Deep space blues + nebula purples as primary accent.
+   All Tailwind utility classes automatically pick up the new tokens.
    ──────────────────────────────────────────────────────────────────────── */
 @theme {
-  /* Grays → near-black surfaces */
-  --color-gray-50:  #0a0a0a;
-  --color-gray-100: #111111;
-  --color-gray-200: #1a1a1a;
-  --color-gray-300: #242424;
-  --color-gray-400: #555555;
-  --color-gray-500: #777777;
-  --color-gray-600: #999999;
-  --color-gray-700: #bbbbbb;
-  --color-gray-800: #d5d5d5;
-  --color-gray-900: #f0f0f0;
+  /* Grays → near-black space surfaces */
+  --color-gray-50:  #020010;
+  --color-gray-100: #06001a;
+  --color-gray-200: #0d0525;
+  --color-gray-300: #160e38;
+  --color-gray-400: #3a2e6a;
+  --color-gray-500: #6356a0;
+  --color-gray-600: #8a7fc4;
+  --color-gray-700: #b0a8e0;
+  --color-gray-800: #d0ccf0;
+  --color-gray-900: #eeeaf8;
 
-  /* White → dark card surface */
-  --color-white: #141414;
+  /* White → deep-space card surface */
+  --color-white: #0c0822;
 
-  /* Indigo → warm gold (primary accent) */
-  --color-indigo-50:  #1c1810;
-  --color-indigo-100: #241e0e;
-  --color-indigo-200: #3a3018;
-  --color-indigo-300: #5a4a24;
-  --color-indigo-400: #8a7030;
-  --color-indigo-500: #b8972e;
-  --color-indigo-600: #c9a84c;
-  --color-indigo-700: #d4b86a;
-  --color-indigo-800: #e0cc96;
-  --color-indigo-900: #f0e4c0;
+  /* Indigo → electric blue (primary accent) */
+  --color-indigo-50:  #020a1a;
+  --color-indigo-100: #041228;
+  --color-indigo-200: #082040;
+  --color-indigo-300: #103468;
+  --color-indigo-400: #1a52a8;
+  --color-indigo-500: #2a78e4;
+  --color-indigo-600: #4da6ff;
+  --color-indigo-700: #7dc4ff;
+  --color-indigo-800: #b0dcff;
+  --color-indigo-900: #ddf0ff;
 
-  /* Violet → slightly deeper gold (quiz) */
-  --color-violet-50:  #1a1710;
-  --color-violet-100: #221e0e;
-  --color-violet-200: #342c14;
-  --color-violet-300: #504220;
-  --color-violet-400: #7a6428;
-  --color-violet-500: #a88630;
-  --color-violet-600: #b8972e;
-  --color-violet-700: #c9a84c;
-  --color-violet-800: #d9be7a;
-  --color-violet-900: #edd8a8;
+  /* Violet → nebula purple */
+  --color-violet-50:  #08021a;
+  --color-violet-100: #100428;
+  --color-violet-200: #1e0844;
+  --color-violet-300: #320c70;
+  --color-violet-400: #5418b0;
+  --color-violet-500: #7c30e0;
+  --color-violet-600: #a060f8;
+  --color-violet-700: #c090ff;
+  --color-violet-800: #d8b8ff;
+  --color-violet-900: #f0e0ff;
 
-  /* Purple → gold tint */
-  --color-purple-50:  #1c1810;
-  --color-purple-100: #241e0e;
-  --color-purple-200: #3a3018;
-  --color-purple-600: #c9a84c;
-  --color-purple-700: #d4b86a;
+  /* Purple → deep nebula */
+  --color-purple-50:  #0a0218;
+  --color-purple-100: #140428;
+  --color-purple-200: #240840;
+  --color-purple-600: #9050e8;
+  --color-purple-700: #b080f8;
 
-  /* Teal → keep as copper-teal contrast accent (flashcards) */
-  --color-teal-50:  #0a1614;
-  --color-teal-100: #0f1e1b;
-  --color-teal-200: #163028;
-  --color-teal-300: #1e4238;
-  --color-teal-400: #2a6050;
-  --color-teal-500: #368068;
-  --color-teal-600: #3d9e82;
-  --color-teal-700: #52b898;
-  --color-teal-800: #80ccb8;
-  --color-teal-900: #b0e0d4;
+  /* Teal → cyan-teal (flashcards) */
+  --color-teal-50:  #001418;
+  --color-teal-100: #001e24;
+  --color-teal-200: #003040;
+  --color-teal-300: #004860;
+  --color-teal-400: #006888;
+  --color-teal-500: #0094b8;
+  --color-teal-600: #00c0e8;
+  --color-teal-700: #40d8f8;
+  --color-teal-800: #80ecff;
+  --color-teal-900: #c0f8ff;
 
-  /* Green → neon-ish bright green on dark */
-  --color-green-50:  #0a160e;
-  --color-green-100: #0f1e14;
-  --color-green-200: #163020;
+  /* Green → neon green on dark */
+  --color-green-50:  #001408;
+  --color-green-100: #001e10;
+  --color-green-200: #003020;
   --color-green-600: #34d399;
   --color-green-700: #6ee7b7;
   --color-green-800: #a7f3d0;
 
   /* Red → softer red on dark */
-  --color-red-50:  #1a0a0a;
-  --color-red-100: #220e0e;
-  --color-red-200: #341414;
-  --color-red-300: #5a2020;
-  --color-red-400: #cc4444;
-  --color-red-500: #e05555;
-  --color-red-600: #f07070;
-  --color-red-700: #f8a0a0;
+  --color-red-50:  #1a0008;
+  --color-red-100: #220010;
+  --color-red-200: #340018;
+  --color-red-300: #5a1028;
+  --color-red-400: #cc3344;
+  --color-red-500: #e04466;
+  --color-red-600: #f07080;
+  --color-red-700: #f8a0b0;
 
-  /* Amber → gold */
-  --color-amber-50:  #1c1810;
-  --color-amber-700: #c9a84c;
-  --color-amber-800: #d4b86a;
+  /* Amber → electric blue tint */
+  --color-amber-50:  #020a1a;
+  --color-amber-700: #4da6ff;
+  --color-amber-800: #7dc4ff;
 
   /* Blue */
-  --color-blue-50:  #0a1020;
-  --color-blue-500: #60a5fa;
+  --color-blue-50:  #020810;
+  --color-blue-500: #38bdf8;
 }
 
 :root {
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   font: 16px/150% var(--sans);
   color-scheme: dark;
-  color: #c0c0c0;
-  background: #0a0a0a;
+  color: #b8c8e8;
+  background: #020010;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -109,27 +109,27 @@
 
 body {
   margin: 0;
-  background: #0a0a0a;
+  background: #020010;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: #111; }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #555; }
+::-webkit-scrollbar-track { background: #06001a; }
+::-webkit-scrollbar-thumb { background: #1e0844; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #320c70; }
 
 /* Input / textarea autofill fix on dark */
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset;
-  -webkit-text-fill-color: #f0f0f0;
-  caret-color: #f0f0f0;
+  -webkit-box-shadow: 0 0 0 1000px #0d0525 inset;
+  -webkit-text-fill-color: #eeeaf8;
+  caret-color: #eeeaf8;
 }
 
-/* Gold focus rings */
+/* Space-blue focus rings */
 input:focus-visible,
 textarea:focus-visible,
 button:focus-visible {
-  outline: 2px solid #c9a84c;
+  outline: 2px solid #4da6ff;
   outline-offset: 2px;
 }
