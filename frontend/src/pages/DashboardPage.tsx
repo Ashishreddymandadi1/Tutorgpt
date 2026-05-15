@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuthStore } from '@/store/authStore'
 import Navbar from '@/components/Navbar'
+import NeuralBackground from '@/components/NeuralBackground'
 import { BookOpen, FileText, Brain, BarChart2, ClipboardList, Layers } from 'lucide-react'
 import api from '@/services/api'
 
@@ -21,7 +22,9 @@ export default function DashboardPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative overflow-hidden">
+      <NeuralBackground />
+      <div className="relative z-10">
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-6 py-10">
@@ -102,6 +105,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
+      </div>
     </div>
   )
 }
