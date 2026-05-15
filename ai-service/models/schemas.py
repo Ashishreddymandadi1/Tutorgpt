@@ -34,6 +34,21 @@ class GenerateQuizResponse(BaseModel):
     questions: list[QuizQuestionSchema]
 
 
+class FlashcardSchema(BaseModel):
+    front: str
+    back: str
+
+
+class GenerateFlashcardsRequest(BaseModel):
+    course_id: int
+    num_cards: int = 10
+
+
+class GenerateFlashcardsResponse(BaseModel):
+    title: str
+    cards: list[FlashcardSchema]
+
+
 class QueryRequest(BaseModel):
     course_id: int
     question: str

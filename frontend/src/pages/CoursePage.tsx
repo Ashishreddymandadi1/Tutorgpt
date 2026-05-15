@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowLeft, FileText, Trash2, CheckCircle, XCircle, Loader2,
-  Send, BookOpen, Brain, ClipboardList, ChevronRight,
+  Send, BookOpen, Brain, ClipboardList, ChevronRight, Layers,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import UploadZone from '@/components/UploadZone'
@@ -11,6 +11,7 @@ import api from '@/services/api'
 
 interface Course { id: number; name: string; description: string }
 interface QuizSummary { id: number; title: string; createdAt: string }
+interface DeckSummary { id: number; title: string; createdAt: string }
 interface Document {
   id: number
   filename: string
@@ -51,6 +52,22 @@ export default function CoursePage() {
   })
 
   const hasReadyDocs = documents.some((d) => d.status === 'READY')
+
+  const { data: pastDecks = [], refetch: refetchDecks } = useQuery<DeckSummary[]>({
+    queryKey: ['decks', courseId],
+    queryFn: async () => (await api.get(`/courses/${courseId}/decks`)).data,
+  })
+
+  const deckMutation = useMutation({
+    mutationFn: async () => {
+      const res = await api.post(`/courses/${courseId}/decks/generate?numCards=10`)
+      return res.data as { id: number }
+    },
+    onSuccess: (data) => {
+      refetchDecks()
+      navigate(`/courses/${courseId}/deck/${data.id}`)
+    },
+  })
 
   const { data: pastQuizzes = [], refetch: refetchQuizzes } = useQuery<QuizSummary[]>({
     queryKey: ['quizzes', courseId],
@@ -207,6 +224,47 @@ export default function CoursePage() {
             <p className="text-xs text-red-600 text-center">
               {(quizMutation.error as any)?.response?.data?.message ?? 'Quiz generation failed. Please try again.'}
             </p>
+          )}
+
+          {hasReadyDocs && (
+            <Button
+              onClick={() => deckMutation.mutate()}
+              disabled={deckMutation.isPending}
+              className="w-full rounded-xl bg-teal-600 hover:bg-teal-700 h-10 text-sm font-medium"
+            >
+              {deckMutation.isPending ? (
+                <><Loader2 className="h-4 w-4 animate-spin mr-2" /> Generating…</>
+              ) : (
+                <><Layers className="h-4 w-4 mr-2" /> Generate Flashcards</>
+              )}
+            </Button>
+          )}
+
+          {deckMutation.isError && (
+            <p className="text-xs text-red-600 text-center">Flashcard generation failed. Please try again.</p>
+          )}
+
+          {pastDecks.length > 0 && (
+            <div>
+              <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                <Layers className="h-3.5 w-3.5" /> Flashcard Decks
+              </h2>
+              <div className="space-y-1.5">
+                {pastDecks.map((d) => (
+                  <button
+                    key={d.id}
+                    onClick={() => navigate(`/courses/${courseId}/deck/${d.id}`)}
+                    className="w-full bg-white rounded-xl border border-gray-100 px-3 py-2.5 flex items-center gap-2 hover:border-teal-200 hover:bg-teal-50 transition-colors text-left group"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-gray-800 truncate">{d.title}</p>
+                      <p className="text-xs text-gray-400">{new Date(d.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <ChevronRight className="h-3.5 w-3.5 text-gray-300 group-hover:text-teal-400 flex-shrink-0" />
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
 
           {pastQuizzes.length > 0 && (

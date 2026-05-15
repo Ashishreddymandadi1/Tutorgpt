@@ -7,6 +7,7 @@ import DashboardPage from '@/pages/DashboardPage'
 import CoursesPage from '@/pages/CoursesPage'
 import CoursePage from '@/pages/CoursePage'
 import QuizPage from '@/pages/QuizPage'
+import FlashcardsPage from '@/pages/FlashcardsPage'
 import PrivateRoute from '@/components/PrivateRoute'
 import { useAuthStore } from '@/store/authStore'
 
@@ -120,6 +121,10 @@ export default function App() {
       <Route
         path="/courses/:id/quiz/:quizId"
         element={<PrivateRoute><QuizPage /></PrivateRoute>}
+      />
+      <Route
+        path="/courses/:id/deck/:deckId"
+        element={<PrivateRoute><FlashcardsPage /></PrivateRoute>}
       />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
