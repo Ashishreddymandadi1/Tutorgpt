@@ -49,6 +49,15 @@ class GenerateFlashcardsResponse(BaseModel):
     cards: list[FlashcardSchema]
 
 
+class SummarizeRequest(BaseModel):
+    course_id: int
+    doc_id: int
+
+
+class SummarizeResponse(BaseModel):
+    summary: str
+
+
 class QueryRequest(BaseModel):
     course_id: int
     question: str

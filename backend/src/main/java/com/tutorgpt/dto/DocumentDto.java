@@ -20,6 +20,7 @@ public class DocumentDto {
     private String status;
     private LocalDateTime uploadedAt;
     private LocalDateTime processedAt;
+    private String summary;
 
     public static DocumentDto from(Document doc) {
         return DocumentDto.builder()
@@ -30,6 +31,7 @@ public class DocumentDto {
                 .status(doc.getStatus().name())
                 .uploadedAt(doc.getUploadedAt())
                 .processedAt(doc.getProcessedAt())
+                .summary(doc.getSummary())
                 .build();
     }
 }

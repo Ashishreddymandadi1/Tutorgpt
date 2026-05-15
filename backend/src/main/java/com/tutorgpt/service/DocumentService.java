@@ -11,12 +11,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -28,16 +32,19 @@ public class DocumentService {
     private final DocumentRepository documentRepository;
     private final CourseService courseService;
     private final IngestService ingestService;
+    private final WebClient aiServiceWebClient;
 
     @Value("${upload.dir:./uploads}")
     private String uploadDir;
 
     public DocumentService(DocumentRepository documentRepository,
                            CourseService courseService,
-                           IngestService ingestService) {
+                           IngestService ingestService,
+                           WebClient aiServiceWebClient) {
         this.documentRepository = documentRepository;
         this.courseService = courseService;
         this.ingestService = ingestService;
+        this.aiServiceWebClient = aiServiceWebClient;
     }
 
     @Transactional(readOnly = true)
@@ -98,6 +105,38 @@ public class DocumentService {
         }
 
         documentRepository.delete(doc);
+    }
+
+    @Transactional
+    public DocumentDto summarize(Long docId, UserDetails userDetails) {
+        Document doc = documentRepository.findById(docId)
+                .orElseThrow(() -> new IllegalArgumentException("Document not found"));
+        courseService.getCourseEntity(doc.getCourse().getId(), userDetails);
+
+        if (doc.getStatus() != DocumentStatus.READY) {
+            throw new IllegalStateException("Document must be in READY state to summarize");
+        }
+
+        try {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> aiResp = aiServiceWebClient.post()
+                    .uri("/summarize")
+                    .bodyValue(Map.of("course_id", doc.getCourse().getId(), "doc_id", docId))
+                    .retrieve()
+                    .bodyToMono(Map.class)
+                    .timeout(Duration.ofSeconds(60))
+                    .block();
+
+            String summary = aiResp != null ? (String) aiResp.get("summary") : "";
+            doc.setSummary(summary);
+            return DocumentDto.from(documentRepository.save(doc));
+        } catch (WebClientResponseException e) {
+            throw new IllegalStateException("AI service error: " + e.getResponseBodyAsString());
+        } catch (IllegalStateException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new IllegalStateException("Summarization failed: " + e.getMessage());
+        }
     }
 
     private void validateFile(MultipartFile file) {

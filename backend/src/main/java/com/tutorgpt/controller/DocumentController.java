@@ -55,4 +55,21 @@ public class DocumentController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/documents/{docId}/summarize")
+    public ResponseEntity<?> summarize(@PathVariable Long docId,
+                                       @AuthenticationPrincipal UserDetails userDetails) {
+        try {
+            DocumentDto dto = documentService.summarize(docId, userDetails);
+            return ResponseEntity.ok(dto);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                    .body(ErrorResponse.of("AI_ERROR", e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ErrorResponse.of("SUMMARIZE_FAILED", "Summarization failed. Please try again."));
+        }
+    }
 }

@@ -43,6 +43,9 @@ public class Document {
     @Column(name = "processed_at")
     private LocalDateTime processedAt;
 
+    @Column(columnDefinition = "TEXT")
+    private String summary;
+
     @PrePersist
     protected void onCreate() {
         uploadedAt = LocalDateTime.now();

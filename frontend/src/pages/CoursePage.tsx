@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowLeft, FileText, Trash2, CheckCircle, XCircle, Loader2,
   Send, BookOpen, Brain, ClipboardList, ChevronRight, Layers,
+  Sparkles, ChevronDown, ChevronUp,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import UploadZone from '@/components/UploadZone'
@@ -19,6 +20,7 @@ interface Document {
   pageCount: number
   uploadedAt: string
   processedAt: string | null
+  summary: string | null
 }
 interface Citation { doc_name: string; page_num: number; chunk_index: number }
 interface Message {
@@ -176,25 +178,16 @@ export default function CoursePage() {
               </h2>
               <div className="space-y-2">
                 {documents.map((doc) => (
-                  <div
+                  <DocumentCard
                     key={doc.id}
-                    className="bg-white rounded-xl border border-gray-100 px-3 py-2.5 flex items-center gap-2 group"
-                  >
-                    <FileText className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-gray-900 truncate">{doc.filename}</p>
-                      {doc.pageCount > 0 && (
-                        <p className="text-xs text-gray-400">{doc.pageCount} pages</p>
-                      )}
-                    </div>
-                    <StatusBadge status={doc.status} />
-                    <button
-                      onClick={() => deleteMutation.mutate(doc.id)}
-                      className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-red-500 transition-all"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
+                    doc={doc}
+                    onDelete={() => deleteMutation.mutate(doc.id)}
+                    onSummarized={(updated) =>
+                      queryClient.setQueryData(['documents', courseId], (old: Document[]) =>
+                        old.map((d) => (d.id === updated.id ? updated : d))
+                      )
+                    }
+                  />
                 ))}
               </div>
             </div>
@@ -380,6 +373,65 @@ export default function CoursePage() {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+function DocumentCard({
+  doc,
+  onDelete,
+  onSummarized,
+}: {
+  doc: Document
+  onDelete: () => void
+  onSummarized: (updated: Document) => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+
+  const summarizeMutation = useMutation({
+    mutationFn: async () => (await api.post(`/documents/${doc.id}/summarize`)).data as Document,
+    onSuccess: (updated) => {
+      onSummarized(updated)
+      setExpanded(true)
+    },
+  })
+
+  return (
+    <div className="bg-white rounded-xl border border-gray-100 overflow-hidden group">
+      <div className="px-3 py-2.5 flex items-center gap-2">
+        <FileText className="h-4 w-4 text-gray-400 flex-shrink-0" />
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-medium text-gray-900 truncate">{doc.filename}</p>
+          {doc.pageCount > 0 && <p className="text-xs text-gray-400">{doc.pageCount} pages</p>}
+        </div>
+        <StatusBadge status={doc.status} />
+        {doc.status === 'READY' && (
+          <button
+            onClick={() => doc.summary ? setExpanded((e) => !e) : summarizeMutation.mutate()}
+            disabled={summarizeMutation.isPending}
+            title={doc.summary ? 'Toggle summary' : 'Generate summary'}
+            className="p-1 text-gray-400 hover:text-amber-500 transition-colors flex-shrink-0"
+          >
+            {summarizeMutation.isPending
+              ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              : doc.summary
+              ? (expanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />)
+              : <Sparkles className="h-3.5 w-3.5" />}
+          </button>
+        )}
+        <button
+          onClick={onDelete}
+          className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-red-500 transition-all flex-shrink-0"
+        >
+          <Trash2 className="h-3.5 w-3.5" />
+        </button>
+      </div>
+
+      {doc.summary && expanded && (
+        <div className="px-3 pb-3 border-t border-gray-50">
+          <p className="text-xs text-gray-600 leading-relaxed mt-2 whitespace-pre-wrap">{doc.summary}</p>
+        </div>
+      )}
     </div>
   )
 }
