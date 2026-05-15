@@ -14,6 +14,6 @@ CREATE TABLE quiz_questions (
     option_b      VARCHAR(1000) NOT NULL,
     option_c      VARCHAR(1000) NOT NULL,
     option_d      VARCHAR(1000) NOT NULL,
-    correct_option CHAR(1)      NOT NULL,
+    correct_option VARCHAR(1)   NOT NULL,
     explanation   TEXT
 );

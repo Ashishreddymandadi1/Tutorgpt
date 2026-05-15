@@ -197,7 +197,9 @@ export default function CoursePage() {
           )}
 
           {quizMutation.isError && (
-            <p className="text-xs text-red-600 text-center">Quiz generation failed. Please try again.</p>
+            <p className="text-xs text-red-600 text-center">
+              {(quizMutation.error as any)?.response?.data?.message ?? 'Quiz generation failed. Please try again.'}
+            </p>
           )}
         </aside>
 
