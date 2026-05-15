@@ -38,7 +38,7 @@ public class QuizController {
                     .body(ErrorResponse.of("AI_ERROR", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(ErrorResponse.of("QUIZ_FAILED", e.getClass().getSimpleName() + ": " + e.getMessage()));
+                    .body(ErrorResponse.of("QUIZ_FAILED", "Quiz generation failed. Please try again."));
         }
     }
 
