@@ -3,13 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
   ArrowLeft, FileText, Trash2, CheckCircle, XCircle, Loader2,
-  Send, BookOpen, Brain,
+  Send, BookOpen, Brain, ClipboardList, ChevronRight,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import UploadZone from '@/components/UploadZone'
 import api from '@/services/api'
 
 interface Course { id: number; name: string; description: string }
+interface QuizSummary { id: number; title: string; createdAt: string }
 interface Document {
   id: number
   filename: string
@@ -51,6 +52,11 @@ export default function CoursePage() {
 
   const hasReadyDocs = documents.some((d) => d.status === 'READY')
 
+  const { data: pastQuizzes = [], refetch: refetchQuizzes } = useQuery<QuizSummary[]>({
+    queryKey: ['quizzes', courseId],
+    queryFn: async () => (await api.get(`/courses/${courseId}/quizzes`)).data,
+  })
+
   const quizMutation = useMutation({
     mutationFn: async () => {
       const res = await api.post(
@@ -59,6 +65,7 @@ export default function CoursePage() {
       return res.data as { id: number }
     },
     onSuccess: (data) => {
+      refetchQuizzes()
       navigate(`/courses/${courseId}/quiz/${data.id}`)
     },
   })
@@ -200,6 +207,29 @@ export default function CoursePage() {
             <p className="text-xs text-red-600 text-center">
               {(quizMutation.error as any)?.response?.data?.message ?? 'Quiz generation failed. Please try again.'}
             </p>
+          )}
+
+          {pastQuizzes.length > 0 && (
+            <div>
+              <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                <ClipboardList className="h-3.5 w-3.5" /> Past Quizzes
+              </h2>
+              <div className="space-y-1.5">
+                {pastQuizzes.map((q) => (
+                  <button
+                    key={q.id}
+                    onClick={() => navigate(`/courses/${courseId}/quiz/${q.id}`)}
+                    className="w-full bg-white rounded-xl border border-gray-100 px-3 py-2.5 flex items-center gap-2 hover:border-violet-200 hover:bg-violet-50 transition-colors text-left group"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-gray-800 truncate">{q.title}</p>
+                      <p className="text-xs text-gray-400">{new Date(q.createdAt).toLocaleDateString()}</p>
+                    </div>
+                    <ChevronRight className="h-3.5 w-3.5 text-gray-300 group-hover:text-violet-400 flex-shrink-0" />
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
         </aside>
 

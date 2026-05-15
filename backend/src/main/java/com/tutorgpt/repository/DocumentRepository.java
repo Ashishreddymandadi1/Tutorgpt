@@ -15,6 +15,9 @@ import java.util.List;
 public interface DocumentRepository extends JpaRepository<Document, Long> {
     List<Document> findByCourseOrderByUploadedAtDesc(Course course);
 
+    @Query("SELECT COUNT(d) FROM Document d WHERE d.course.user = :user")
+    long countByUser(@Param("user") com.tutorgpt.model.User user);
+
     @Modifying
     @Transactional
     @Query("UPDATE Document d SET d.status = :status, d.processedAt = :now, d.pageCount = :pageCount WHERE d.id = :id")

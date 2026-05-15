@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByUserOrderByCreatedAtDesc(User user);
     Optional<Course> findByIdAndUser(Long id, User user);
+    long countByUser(User user);
 }

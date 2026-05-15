@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface QuizRepository extends JpaRepository<Quiz, Long> {
     List<Quiz> findByCourseOrderByCreatedAtDesc(Course course);
+
+    @org.springframework.data.jpa.repository.Query("SELECT COUNT(q) FROM Quiz q WHERE q.course.user = :user")
+    long countByUser(@org.springframework.data.repository.query.Param("user") com.tutorgpt.model.User user);
 }
